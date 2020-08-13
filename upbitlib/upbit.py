@@ -1,5 +1,8 @@
 import requests
 import jwt
+import uuid
+import hashlib
+from urllib.parse import urlencode
 import time
 import platform
 try:
@@ -28,19 +31,20 @@ class Upbit(object):
 			if authorization:
 				payload = {
 					'access_key': self.access_key,
-					'nonce': str(int(time.time() * 1000))
+					#'nonce': str(int(time.time() * 1000))
+					'nonce': str(uuid.uuid4())
 				}
 				if query_params is not None:
 					payload['query'] = query_params
 					url = '{0:s}?{1:s}'.format(url, query_params)
-				token = jwt.encode(payload, self.secret_key, algorithm='HS256')
+				#token = jwt.encode(payload, self.secret_key, algorithm='HS256')
+				token = jwt.encode(payload, self.secret_key)
 				headers['Authorization'] = 'Bearer {0:s}'.format(token.decode('utf-8'))
 				req = requests.Request(method, url, headers=headers)
 			else:
 				req = requests.Request(method, url, headers=headers, params=query_params)
 			prepped = s.prepare_request(req)
 			response = s.send(prepped)
-			print(response)
 		return response.json() if response.status_code is 200 or response.status_code is 201 else None
 
 	def get_markets(self):

@@ -14,15 +14,15 @@ for line in lines:
 	print(line.split('=')[0])
 	print(line.split('=')[1])
 	if line.split('=')[0] == 'UPBIT_API_KEY' :
-		UPBIT_API_KEY = line.split('=')[1]
+		UPBIT_API_KEY = line.split('=')[1].split('\n')[0]
 		print(type(UPBIT_API_KEY))
 	elif line.split('=')[0] == 'UPBIT_SEC_KEY' :
-		UPBIT_SEC_KEY = line.split('=')[1]
+		UPBIT_SEC_KEY = line.split('=')[1].split('\n')[0]
 		print(type(UPBIT_SEC_KEY))
 	elif line.split('=')[0] == 'SELECTED_COINS' :
 		temp = line.split('=')[1]
 		for i in temp.split(',') :
-			SELECTED_COINS.append(i)
+			SELECTED_COINS.append(i.split('\n')[0])
 
 	elif line.split('=')[0] == 'GROWING_PERIOD' :
 		GROWING_PERIOD = int(line.split('=')[1])
@@ -44,6 +44,8 @@ for k in SELECTED_COINS :
 
 print('trading start!!')
 
+print(UPBIT_API_KEY)
+print(UPBIT_SEC_KEY)
 # API 초기화
 upbit = Upbit(UPBIT_API_KEY, UPBIT_SEC_KEY)
 
@@ -62,15 +64,15 @@ coins = candidate_coins()
 trade_markets = list(coins)
 
 for market in trade_markets :
-	print(market)
+	#print(market)
 	cc = select_coins(market)
 	print(cc)
 
 accounts_list = upbit.get_accounts()
+#print(type(accounts_list))
 #accounts_list = filter(lambda z: z['currency'] != 'KRW', accounts_list)
+#print(accounts_list)
 #for wallet in accounts_list:
 #	print(wallet)
 	
-
-
-exit(0)
+#exit(0)
