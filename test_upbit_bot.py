@@ -104,7 +104,31 @@ def buy(market, budget):
 
                         upbit.cancel_order(result['uuid'])
 
+def sell(market, amount):
+        print("sell [%s]" % market)
+        for retry in range(3):
+                ticker = upbit.get_ticker(market)
+                if not ticker:
+                        return
+                total_price = float(amount) * float(ticker[0]['trade_price'])
+                print(total_price)
+                if total_price < 500:
+                        return
+
+                last_price = fix_price(ticker[0]['trade_price'] * (1 - SPREAD_GAP))
+                result = upbit.place_order(market, 'ask', amount, last_price)
+
+                if result and result['uuid']:
+                        for i in range(5):
+                                order_info = upbit.get_order(result['uuid'])
+                                if order_info and float(order_info['remaining_volume']) <= 0.0:
+                                        return
+                                time.sleep(1)
+
+                        upbit.cancel_order(result['uuid'])
+
 buy('KRW-STMX', 520)
+sell('KRW-STMX', 138)
 
 
 
