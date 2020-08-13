@@ -15,9 +15,10 @@ HOST = 'api.upbit.com'
 VERSION = 'v1'
 
 def response_print(response) :
-	for text in response.json() :
-		for key, value in text.items() :
-			print(key, value)
+	print(response.json())
+#	for text in response.json() :
+#		for key, value in text.items() :
+#			print(key, value)
 
 
 class Upbit(object):

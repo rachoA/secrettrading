@@ -69,6 +69,45 @@ for market in trade_markets :
 	print(cc)
 
 accounts_list = upbit.get_accounts()
+
+def fix_price(price):
+        _unit = {
+                10: 0.01,
+                10**1: 0.1,
+                10**2: 1,
+                10**3: 5,
+                10**4: 10,
+                5*10**4: 50,
+                10**5: 100,
+                10**6: 500,
+                2*10**6: 1000
+        }
+        for p in _unit:
+                if price > p:
+                        price = (price // _unit[p]) * _unit[p]
+        return price
+
+def buy(market, budget):
+        print("buy [%s]" % market)
+        for retry in range(3):
+                ticker = upbit.get_ticker(market)
+                last_price = fix_price(ticker[0]['trade_price'] * (1 + SPREAD_GAP))
+                amount = budget / last_price
+
+                result = upbit.place_order(market, 'bid', amount, last_price)
+                if result and result['uuid']:
+                        for i in range(5):
+                                order_info = upbit.get_order(result['uuid'])
+                                if order_info and float(order_info['remaining_volume']) <= 0.0:
+                                        return
+                                time.sleep(1)
+
+                        upbit.cancel_order(result['uuid'])
+
+buy('KRW-STMX', 520)
+
+
+
 #print(type(accounts_list))
 #accounts_list = filter(lambda z: z['currency'] != 'KRW', accounts_list)
 #print(accounts_list)
