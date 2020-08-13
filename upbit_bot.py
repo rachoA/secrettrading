@@ -14,15 +14,15 @@ for line in lines:
 	print(line.split('=')[0])
 	print(line.split('=')[1])
 	if line.split('=')[0] == 'UPBIT_API_KEY' :
-		UPBIT_API_KEY = line.split('=')[1]
+		UPBIT_API_KEY = line.split('=')[1].split('\n')[0]
 		print(type(UPBIT_API_KEY))
 	elif line.split('=')[0] == 'UPBIT_SEC_KEY' :
-		UPBIT_SEC_KEY = line.split('=')[1]
+		UPBIT_SEC_KEY = line.split('=')[1].split('\n')[0]
 		print(type(UPBIT_SEC_KEY))
 	elif line.split('=')[0] == 'SELECTED_COINS' :
 		temp = line.split('=')[1]
 		for i in temp.split(',') :
-			SELECTED_COINS.append(i)
+			SELECTED_COINS.append(i.split('\n')[0])
 
 	elif line.split('=')[0] == 'GROWING_PERIOD' :
 		GROWING_PERIOD = line.split('=')[1]
@@ -38,9 +38,6 @@ for line in lines:
 		print(type(SPREAD_GAP))
 
 f.close()
-
-for k in SELECTED_COINS :
-	print(k)
 
 print('trading start!!')
 #UPBIT_API_KEY = ''  # 업비트에서 발급 받은 Key 입력
