@@ -14,6 +14,12 @@ PROTOCOL = 'https'
 HOST = 'api.upbit.com'
 VERSION = 'v1'
 
+def response_print(response) :
+	for text in response.json() :
+		for key, value in text.items() :
+			print(key, value)
+
+
 class Upbit(object):
 	"""
 	Python wrapper for the Upbit API
@@ -49,7 +55,7 @@ class Upbit(object):
 				req = requests.Request(method, url, headers=headers, params=query_params)
 			prepped = s.prepare_request(req)
 			response = s.send(prepped)
-			print(response)
+			response_print(response)
 		return response.json() if response.status_code is 200 or response.status_code is 201 else None
 
 	def get_markets(self):
