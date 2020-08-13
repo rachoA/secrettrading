@@ -40,11 +40,16 @@ class Upbit(object):
 				#token = jwt.encode(payload, self.secret_key, algorithm='HS256')
 				token = jwt.encode(payload, self.secret_key)
 				headers['Authorization'] = 'Bearer {0:s}'.format(token.decode('utf-8'))
+				print(url)
+				print(headers)
 				req = requests.Request(method, url, headers=headers)
 			else:
+				print(url)
+				print(headers)
 				req = requests.Request(method, url, headers=headers, params=query_params)
 			prepped = s.prepare_request(req)
 			response = s.send(prepped)
+			print(response)
 		return response.json() if response.status_code is 200 or response.status_code is 201 else None
 
 	def get_markets(self):

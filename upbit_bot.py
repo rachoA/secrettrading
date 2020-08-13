@@ -109,6 +109,7 @@ def fix_price(price):
 	return price
 
 def buy(market, budget):
+	print("buy [%s]" % market)
 	for retry in range(3):
 		ticker = upbit.get_ticker(market)
 		last_price = fix_price(ticker[0]['trade_price'] * (1 + SPREAD_GAP))
@@ -126,6 +127,7 @@ def buy(market, budget):
 
 
 def sell(market, amount):
+	print("sell [%s]" % market)
 	for retry in range(3):
 		ticker = upbit.get_ticker(market)
 		if not ticker:
