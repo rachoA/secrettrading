@@ -134,7 +134,7 @@ def sell(market, amount):
 			return
 
 		total_price = float(amount) * float(ticker[0]['trade_price'])
-		if total_price < 10000:
+		if total_price < 500:
 			return
 
 		last_price = fix_price(ticker[0]['trade_price'] * (1 - SPREAD_GAP))
