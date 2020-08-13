@@ -25,16 +25,16 @@ for line in lines:
 			SELECTED_COINS.append(i.split('\n')[0])
 
 	elif line.split('=')[0] == 'GROWING_PERIOD' :
-		GROWING_PERIOD = line.split('=')[1]
+		GROWING_PERIOD = int(line.split('=')[1])
 		print(type(GROWING_PERIOD))
 	elif line.split('=')[0] == 'BETTING_BUDGET' :
-		BETTING_BUDGET = line.split('=')[1]
+		BETTING_BUDGET = int(line.split('=')[1])
 		print(type(BETTING_BUDGET))
 	elif line.split('=')[0] == 'MAX_NUM_COIN' :
-		MAX_NUM_COIN = line.split('=')[1]
+		MAX_NUM_COIN = int(line.split('=')[1])
 		print(type(MAX_NUM_COIN))
 	elif line.split('=')[0] == 'SPREAD_GAP' :
-		SPREAD_GAP = line.split('=')[1]
+		SPREAD_GAP = float(line.split('=')[1])
 		print(type(SPREAD_GAP))
 
 f.close()
