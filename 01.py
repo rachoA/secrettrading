@@ -6,4 +6,5 @@ querystring = {"market":"KRW-BTC","count":"1"}
 
 response = requests.request("GET", url, params=querystring)
 
+
 print(response.text)
